@@ -1,47 +1,69 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Floating Blocks</title>
-    <style>
-      #container {
-        width: 300px;
-        height: 300px;
-        margin: 0 auto;
-        border: 2px solid black;
-        display: flex;
-        flex-wrap: wrap;
-      }
+<head>
+	<title>4x4 オセロゲーム</title>
+	<style type="text/css">
+		table, td {
+			border: 1px solid black;
+			width: 60px;
+			height: 60px;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<table>
+		<tr>
+			<td id="cell00"></td>
+			<td id="cell01"></td>
+			<td id="cell02"></td>
+			<td id="cell03"></td>
+		</tr>
+		<tr>
+			<td id="cell10"></td>
+			<td id="cell11"></td>
+			<td id="cell12"></td>
+			<td id="cell13"></td>
+		</tr>
+		<tr>
+			<td id="cell20"></td>
+			<td id="cell21"></td>
+			<td id="cell22"></td>
+			<td id="cell23"></td>
+		</tr>
+		<tr>
+			<td id="cell30"></td>
+			<td id="cell31"></td>
+			<td id="cell32"></td>
+			<td id="cell33"></td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+		var currentPlayer = 1;
+		var board = [
+			[0,0,0,0],
+			[0,0,0,0],
+			[0,0,0,0],
+			[0,0,0,0]
+		];
 
-      .block {
-        width: 58px;
-        height: 58px;
-        margin: 5px;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 30px;
-        color: white;
-        font-weight: bold;
-      }
+		function flipDisc(row, col) {
+			if (board[row][col] === 0) {
+				board[row][col] = currentPlayer;
+				document.getElementById('cell' + row + col).style.backgroundColor = (currentPlayer === 1) ? 'black' : 'white';
+				currentPlayer = (currentPlayer === 1) ? 2 : 1;
+			}
+		}
 
-      #score {
-        text-align: center;
-        font-size: 24px;
-        margin-top: 20px;
-      }
-
-      #time {
-        text-align: center;
-        font-size: 24px;
-        margin-top: 20px;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="container"></div>
-    <div id="score">Score: 0</div>
-    <div id="time">Time: 60</div>
-    <script src="floating-blocks.js"></script>
-  </body>
+		for (var i = 0; i < 4; i++) {
+			for (var j = 0; j < 4; j++) {
+				document.getElementById('cell' + i + j).addEventListener('click', (function(row, col) {
+					return function() {
+						flipDisc(row, col);
+					};
+				})(i, j));
+			}
+		}
+	</script>
+</body>
 </html>
