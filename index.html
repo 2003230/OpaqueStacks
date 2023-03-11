@@ -2,13 +2,80 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>不透明なスタック</title>
-    <link rel="stylesheet" href="style.css">
+    <title>反論理</title>
   </head>
   <body>
-    <h1>不透明なスタック</h1>
-    <div id="game-board"></div>
-    <button id="reset-button">リセット</button>
-    <script src="game.js"></script>
+    <h1>反論理</h1>
+    <p id="question"></p>
+    <form>
+      <input type="radio" name="answer" value="true"> 真
+      <input type="radio" name="answer" value="false"> 偽
+      <br><br>
+      <button type="button" onclick="checkAnswer()">回答する</button>
+      <button type="button" onclick="nextQuestion()">次の問題</button>
+      <button type="button" onclick="showAnswers()">答えを表示</button>
+    </form>
+    <p id="result"></p>
+
+    <script>
+      // パズルの問題
+      const questions = [
+        "この文が偽である。",
+        "AはBかつCである。",
+        "Bは真である。",
+        "この文が真である。",
+        "Aは真である。",
+        "この文は偽である。",
+        "AはBである。"
+      ];
+
+      // 正解の答えを保存する配列
+      const answers = [];
+
+      // 現在の問題のインデックス
+      let currentQuestion = 0;
+
+      // HTML要素の取得
+      const questionEl = document.getElementById("question");
+      const resultEl = document.getElementById("result");
+      const answerEl = document.getElementsByName("answer");
+
+      // 問題を表示する関数
+      function displayQuestion() {
+        questionEl.textContent = questions[currentQuestion];
+      }
+
+      // 回答をチェックする関数
+      function checkAnswer() {
+        // ここでは回答の検証は行わない
+        // 答えを配列に保存する
+        answers[currentQuestion] = answerEl[0].checked ? true : false;
+      }
+
+      // 次の問題に進む関数
+      function nextQuestion() {
+        currentQuestion++;
+        if (currentQuestion >= questions.length) {
+          currentQuestion = 0;
+        }
+        displayQuestion();
+        resultEl.textContent = "";
+        answerEl[0].checked = false;
+        answerEl[1].checked = false;
+      }
+
+      // 答えを表示する関数
+      function showAnswers() {
+        resultEl.innerHTML = "";
+        for (let i = 0; i < questions.length; i++) {
+          const answer = answers[i] === undefined ? "未回答" : answers[i] ? "真" : "偽";
+          const question = questions[i];
+          resultEl.innerHTML += `${i+1}. ${question} - ${answer}<br>`;
+        }
+      }
+
+      // 初期化
+      displayQuestion();
+    </script>
   </body>
 </html>
