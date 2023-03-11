@@ -1,0 +1,44 @@
+#game-board {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+  gap: 2px;
+}
+
+.tile {
+  background-color: #ddd;
+  border: 1px solid #aaa;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.tile:hover {
+  background-color: #eee;
+}
+
+.tile-stack {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.tile-stack .tile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.tile-stack .hidden-tile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  opacity: 0.5;
+}
